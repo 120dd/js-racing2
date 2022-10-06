@@ -2,7 +2,7 @@ import { $ } from './utils/dom.js';
 import { SELECTOR } from "./constants.js";
 import { Car } from "./car.js";
 import { isNotMinusNum } from "./validator.js";
-import { RESULT_TEMPLATE } from "./templates.js";
+import { RESTART_BUTTON_TEMPLATE, RESULT_TEMPLATE } from "./templates.js";
 
 
 class App {
@@ -21,6 +21,9 @@ class App {
             carNameArr.forEach(v => {
                 newCars.push(new Car(v));
             });
+            if (!this.validateCarNameInput(newCars)) {
+                return;
+            }
             this.cars = newCars;
         });
     }
@@ -38,11 +41,16 @@ class App {
         });
     }
     
-    validateGameOption(inputValue) {
-        if (this.cars.length < 2) {
+    validateCarNameInput(newCars) {
+        if (newCars.length < 2) {
             alert("자동차를 2개 이상 입력해주세요");
             return false;
         }
+        return true
+    }
+    
+    validateGameOption(inputValue) {
+        
         if (!isNotMinusNum(inputValue)) {
             alert("1 이상 숫자를 입력하세요");
             return false;
@@ -87,6 +95,11 @@ class App {
             winnerNames.push(winner.name);
         })
         $(SELECTOR.WINNERS).innerHTML = winnerNames.join(",");
+        this.renderRestartButton();
+    }
+    
+    renderRestartButton() {
+        $(SELECTOR.WINNERS).insertAdjacentHTML("afterend", RESTART_BUTTON_TEMPLATE)
     }
 }
 

@@ -18,3 +18,9 @@ ${RESULT_CONTENTS(carsInfo)}
 </div>
 <br/>
 `
+
+export const RESTART_BUTTON_TEMPLATE = `
+<div>
+<button>재시작</button>
+</div>
+`
